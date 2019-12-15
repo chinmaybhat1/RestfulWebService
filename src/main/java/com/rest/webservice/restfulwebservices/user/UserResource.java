@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class UserResource {
 
 		UserDTO user = userService.getUserById(id);
 
-		if (null == user.getId()) {
+		if (null == user) {
 			throw new UserNotFoundException("Unable to find user with id " + id);
 		}
 		
@@ -49,6 +50,16 @@ public class UserResource {
 				.toUri();
 
 		return ResponseEntity.created(loction).build();
+	}
+	
+	@DeleteMapping("/users/{id}")
+	public void deleteUserById(@PathVariable long id) {
+
+		UserDTO user = userService.deleteUserById(id);
+
+		if (null == user) {
+			throw new UserNotFoundException("Unable to find user with id " + id);
+		}
 	}
 
 }
