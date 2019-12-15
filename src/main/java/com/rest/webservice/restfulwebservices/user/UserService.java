@@ -29,11 +29,11 @@ public class UserService {
 	}
 
 	public UserDTO createUser(UserDTO userDTO) {
-		
+
 		User user = userConverter.convert(userDTO);
-		
+
 		User createdUser = userDAO.save(user);
-		
+
 		return userConverter.convert(createdUser);
 	}
 

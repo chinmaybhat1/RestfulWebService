@@ -7,8 +7,6 @@ public class UserDTO {
 	private Long id;
 	private String name;
 	private Date dateOfBirth;
-	
-	
 
 	public UserDTO() {
 		super();

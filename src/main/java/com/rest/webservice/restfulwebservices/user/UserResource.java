@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.rest.webservice.restfulwebservices.exception.UserNotFoundException;
+
 @RestController
 public class UserResource {
 
@@ -25,7 +27,14 @@ public class UserResource {
 
 	@GetMapping("/users/{id}")
 	public UserDTO getUserById(@PathVariable long id) {
-		return userService.getUserById(id);
+
+		UserDTO user = userService.getUserById(id);
+
+		if (null == user.getId()) {
+			throw new UserNotFoundException("Unable to find user with id " + id);
+		}
+		
+		return user;
 	}
 
 	@PostMapping("/users")
