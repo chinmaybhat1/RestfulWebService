@@ -29,3 +29,6 @@ local.properties
 HELP.md
 mvnw
 mvnw.cmd
+
+.DS_Store
+logs/
