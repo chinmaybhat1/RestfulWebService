@@ -2,10 +2,15 @@ package com.rest.webservice.restfulwebservices.user;
 
 import java.util.Date;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 public class UserDTO {
 
 	private Long id;
+	@Size(min = 2, message="Name should have atleast 2 characters.")
 	private String name;
+	@Past
 	private Date dateOfBirth;
 
 	public UserDTO() {
