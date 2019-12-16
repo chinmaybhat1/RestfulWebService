@@ -6,6 +6,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +33,7 @@ public class UserResource {
 	}
 
 	@GetMapping("/users/{id}")
-	public UserDTO getUserById(@PathVariable long id) {
+	public Resource<UserDTO> getUserById(@PathVariable long id) {
 
 		UserDTO user = userService.getUserById(id);
 
@@ -37,7 +41,11 @@ public class UserResource {
 			throw new UserNotFoundException("Unable to find user with id " + id);
 		}
 		
-		return user;
+		Resource<UserDTO> resource = new Resource<UserDTO>(user);
+		ControllerLinkBuilder linkedTo = linkTo(methodOn(this.getClass()).getAllUsers());
+		resource.add(linkedTo.withRel("all-users"));
+		
+		return resource;
 	}
 
 	@PostMapping("/users")
